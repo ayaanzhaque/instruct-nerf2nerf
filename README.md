@@ -54,3 +54,10 @@ ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_mod
 ```
 
 Using the CLI commands, you can choose the prompt and the guidance scales used for InstructPix2Pix.
+
+## Training Notes
+
+If you have multiple GPUs, significant speed-ups can be achieved by placing InstructPix2Pix on a separate GPU. To do so, add ```pipeline.ip2p-device cuda:{device-number}``` to your training command.
+
+Using LPIPs requires training with 16000 rays.
+
