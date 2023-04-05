@@ -22,6 +22,7 @@ from dataclasses import dataclass, field
 from typing import Type
 
 import torch
+from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 from nerfstudio.model_components.losses import (
     L1Loss,
     interlevel_loss,
@@ -49,6 +50,7 @@ class InstructNeRF2NeRFModel(NerfactoModel):
         super().populate_modules()
 
         self.rgb_loss = L1Loss()
+        self.lpips = LearnedPerceptualImagePatchSimilarity()
 
     def get_loss_dict(self, outputs, batch, metrics_dict=None):
         loss_dict = {}
