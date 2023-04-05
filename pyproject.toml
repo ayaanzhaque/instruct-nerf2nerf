@@ -1,0 +1,40 @@
+[project]
+name = "in2n"
+version = "0.1.0"
+
+dependencies=[
+    "nerfstudio",
+    "clip @ git+https://github.com/openai/CLIP.git",
+    "diffusers>=0.14.0.dev0",
+    "transformers>=4.26.1",
+]
+
+# black
+[tool.black]
+line-length = 120
+
+# pylint
+[tool.pylint.messages_control]
+max-line-length = 120
+generated-members = ["numpy.*", "torch.*", "cv2.*", "cv.*"]
+good-names-rgxs = "^[_a-zA-Z][_a-z0-9]?$"
+ignore-paths = ["scripts/colmap2nerf.py"]
+jobs = 0
+ignored-classes = ["TensorDataclass"]
+
+disable = [
+  "duplicate-code",
+  "fixme",
+  "logging-fstring-interpolation",
+  "too-many-arguments",
+  "too-many-branches",
+  "too-many-instance-attributes",
+  "too-many-locals",
+  "unnecessary-ellipsis",
+]
+
+[tool.setuptools.packages.find]
+include = ["in2n"]
+
+[project.entry-points.'nerfstudio.method_configs']
+in2n = 'in2n.in2n_config:in2n_method'
