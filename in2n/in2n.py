@@ -58,9 +58,10 @@ class InstructNeRF2NeRFModel(NerfactoModel):
 
         loss_dict["rgb_loss"] = self.rgb_loss(image, outputs["rgb"])
 
-        out_patches = (outputs["rgb"].view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
-        gt_patches = (image.view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
-        loss_dict["lpips_loss"] = self.config.lpips_loss_mult * self.lpips(out_patches, gt_patches)
+        if self.config.use_lpips:
+            out_patches = (outputs["rgb"].view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
+            gt_patches = (image.view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
+            loss_dict["lpips_loss"] = self.config.lpips_loss_mult * self.lpips(out_patches, gt_patches)
 
         if self.training:
             loss_dict["interlevel_loss"] = self.config.interlevel_loss_mult * interlevel_loss(
