@@ -34,7 +34,7 @@ pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindi
 See [Dependencies](https://github.com/nerfstudio-project/nerfstudio/blob/main/docs/quickstart/installation.md#dependencies)
 in the Installation documentation for more.
 
-### Installing Instruct-NeRF2NeRf
+### Installing Instruct-NeRF2NeRF
 
 Once you have finished installing dependencies, you can install Instruct-NeRF2NeRF using the following commands:
 
