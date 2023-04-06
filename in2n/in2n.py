@@ -33,7 +33,7 @@ from nerfstudio.models.nerfacto import NerfactoModel, NerfactoModelConfig
 class InstructNeRF2NeRFModelConfig(NerfactoModelConfig):
     """Configuration for the InstructNeRF2NeRFModel."""
     _target: Type = field(default_factory=lambda: InstructNeRF2NeRFModel)
-    use_lpips: bool = True
+    use_lpips: bool = False
     """Whether to use LPIPS loss"""
     patch_size: int = 32
     """Patch size to use for LPIPS loss."""
@@ -55,10 +55,10 @@ class InstructNeRF2NeRFModel(NerfactoModel):
     def get_loss_dict(self, outputs, batch, metrics_dict=None):
         loss_dict = {}
         image = batch["image"].to(self.device)
-
         loss_dict["rgb_loss"] = self.rgb_loss(image, outputs["rgb"])
 
         if self.config.use_lpips:
+            print("using LPIPS")
             out_patches = (outputs["rgb"].view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
             gt_patches = (image.view(-1, 3, self.config.patch_size,self.config.patch_size) * 2 - 1).clamp(-1, 1)
             loss_dict["lpips_loss"] = self.config.lpips_loss_mult * self.lpips(out_patches, gt_patches)

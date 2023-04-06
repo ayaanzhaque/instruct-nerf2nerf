@@ -34,6 +34,7 @@ in2n_method = MethodSpecification(
         steps_per_eval_image=100,
         steps_per_save=250,
         max_num_iterations=30000,
+        save_only_latest_checkpoint=False,
         mixed_precision=True,
         pipeline=InstructNeRF2NeRFPipelineConfig(
             datamanager=InstructNeRF2NeRFDataManagerConfig(

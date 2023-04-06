@@ -38,7 +38,7 @@ class InstructNeRF2NeRFDataManagerConfig(VanillaDataManagerConfig):
     """Configuration for the InstructNeRF2NeRFDataManager."""
 
     _target: Type = field(default_factory=lambda: InstructNeRF2NeRFDataManager)
-    patch_size: int = 32
+    patch_size: int = 1
     """Size of patch to sample from. If >1, patch-based sampling will be used."""
 
 class InstructNeRF2NeRFDataManager(VanillaDataManager):
