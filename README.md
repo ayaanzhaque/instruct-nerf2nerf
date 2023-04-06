@@ -82,3 +82,18 @@ In our work, we find that using an LPIPS loss can lead to notable improvements i
 ```bash
 ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_models} --pipeline.prompt {"prompt"} --pipeline.guidance-scale 7.5 --pipeline.image-guidance-scale 1.5 --pipeline.model.use-lpips --pipeline.datamanager.patch-size 32
 ```
+
+# Extending Instruct-NeRF2NeRF
+
+### Issues
+Please open Github issues for any installation/usage problems you run into. We've tried to support as broad a range of GPUs as possible, but it might be necessary to provide even more low-footprint versions. Please contribute with any changes to improve memory usage!
+### Code structure
+To build off Instruct-NeRF2NeRF, we provide explanations of the core code components.
+
+```data/in2n_datamanager.py```: This file is almost identical to the ```base_datamanager.py``` in Nerfstudio. The main difference is that the entire dataset tensor is pre-computed in the ```setup_train``` method as opposed to being sampled in the ```next_train``` method each time.
+
+```in2n_pipeline.py```: This file builds on the pipeline module in Nerfstudio. The ```get_train_loss_dict``` method samples images and places edited images back into the dataset.
+
+```ip2p.py```: This file houses the InstructPix2Pix model (using the ```diffusers``` implementation). The ```edit_image``` method is where an image is denoised using the diffusion model, and a variety of helper methods are contained in this file as well.
+
+```in2n.py```: We overwrite the ```get_loss_dict``` method to use LPIPs loss and L1Loss.
