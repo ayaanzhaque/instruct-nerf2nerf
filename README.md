@@ -82,7 +82,7 @@ If you have multiple GPUs, training can be sped up by placing InstructPix2Pix on
 In our work, we find that using an LPIPS loss can lead to notable improvements in performance. However, using LPIPs requires training with 4x the standard amount of rays in order to sample a useful amount of patches. This will increase the memory requirements. If you would like to train with LPIPs, you can run the following command:
 
 ```bash
-ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_models} --pipeline.prompt {"prompt"} --pipeline.guidance-scale 7.5 --pipeline.image-guidance-scale 1.5 --pipeline.model.use-lpips --pipeline.datamanager.patch-size 32 --pipeline.datamanager.train-num-rays-per-batch 16384
+ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_models} --pipeline.prompt {"prompt"} --pipeline.guidance-scale 7.5 --pipeline.image-guidance-scale 1.5 --pipeline.model.use-lpips True --pipeline.datamanager.patch-size 32 --pipeline.datamanager.train-num-rays-per-batch 16384
 ```
 
 # Extending Instruct-NeRF2NeRF
