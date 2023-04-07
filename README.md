@@ -73,17 +73,19 @@ After the NeRF is trained, you can render the NeRF using the standard Nerfstudio
 
 ## Training Notes
 
-Currently, training should take between 7-10 GB of memory, depending on the size of your data. Please note that training the NeRF on images with resolution than 512 will cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
+We provide 3 variations of our method which all use different amounts of memory. The differences are the precision used for IntructPix2Pix and whether LPIPS is used (which requires 4x more rays). In our paper, we use ```in2n-big```, which uses LPIPs, ~16000 rays for batch, and InstructPix2Pix at full precision. We find that LPIPS is very important for quality, but using half precision only leads to minor decreases in performance. Thus, the standard ```in2n``` uses LPIPs. The details of each config is provided in the table below.
+
+| Method | Precision of InstructPix2Pix | LPIPS? | Memory |
+| ---------------------------------------------------------------------------------------------------- | -------------- | ----------------------------------------------------------------- | ----------------------- |
+| in2n-big | Full | Yes | ~15GB |
+| in2n | Half | Yes | ~10GB |
+| in2n-lite | Half | No | ~8GB |
+
+Please note that training the NeRF on images with resolution larger than 512 will likely cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
 
 We recommend capturing data using images from Polycam, as smaller datasets work better and faster with our method.
 
 If you have multiple GPUs, training can be sped up by placing InstructPix2Pix on a separate GPU. To do so, add ```--pipeline.ip2p-device cuda:{device-number}``` to your training command.
-
-In our work, we find that using an LPIPS loss can lead to notable improvements in performance. However, using LPIPs requires training with 4x the standard amount of rays in order to sample a useful amount of patches. This will increase the memory requirements. If you would like to train with LPIPs, you can run the following command:
-
-```bash
-ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_models} --pipeline.prompt {"prompt"} --pipeline.guidance-scale 7.5 --pipeline.image-guidance-scale 1.5 --pipeline.model.use-lpips True --pipeline.datamanager.patch-size 32 --pipeline.datamanager.train-num-rays-per-batch 16384
-```
 
 # Extending Instruct-NeRF2NeRF
 

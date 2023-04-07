@@ -39,3 +39,5 @@ include = ["in2n"]
 
 [project.entry-points.'nerfstudio.method_configs']
 in2n = 'in2n.in2n_config:in2n_method'
+in2n_big = 'in2n.in2n_config:in2n_method_big'
+in2n_lite = 'in2n.in2n_config:in2n_method_lite'

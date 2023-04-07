@@ -18,10 +18,8 @@
 
 import sys
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Union
 
-import appdirs
 import torch
 from rich.console import Console
 from torch import nn
@@ -86,6 +84,11 @@ class InstructPix2Pix(nn.Module):
 
         pipe.unet.eval()
         pipe.vae.eval()
+
+        # use for improved quality at cost of higher memory
+        if self.use_full_precision:
+            pipe.unet.float()
+            pipe.vae.float()
 
         self.unet = pipe.unet
         self.auto_encoder = pipe.vae
