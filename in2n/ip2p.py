@@ -79,8 +79,7 @@ class InstructPix2Pix(nn.Module):
 
         # improve memory performance
         pipe.enable_attention_slicing()
-        pipe.enable_model_cpu_offload(1)
-        # pipe.enable_sequential_cpu_offload()
+        pipe.enable_model_cpu_offload()
 
         self.scheduler = pipe.scheduler
         self.alphas = self.scheduler.alphas_cumprod.to(self.device)  # type: ignore
@@ -111,15 +110,13 @@ class InstructPix2Pix(nn.Module):
             )
             self.unet = pipe.unet
             self.unet.to(memory_format=torch.channels_last)
-        
+
         pipe.unet.eval()
         pipe.vae.eval()
-        pipe.unet.float()
-        pipe.vae.float()
+        # pipe.unet.float()
+        # pipe.vae.float()
 
         self.unet = pipe.unet
-        self.tokenizer = pipe.tokenizer
-        self.text_encoder = pipe.text_encoder
         self.auto_encoder = pipe.vae
 
         CONSOLE.print("InstructPix2Pix loaded!")
@@ -161,13 +158,12 @@ class InstructPix2Pix(nn.Module):
         # prepare image and image_cond latents
         latents = self.imgs_to_latent(image)
 
-        image_cond = image_cond.clone().detach()
+        # image_cond = image_cond.clone().detach()
         image_cond_latents = self.prepare_image_latents(image_cond)
 
         # add noise
         noise = torch.randn_like(latents)
         latents = self.scheduler.add_noise(latents, noise, self.scheduler.timesteps[0])  # type: ignore
-
 
         # sections of code used from https://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion_instruct_pix2pix.py
         for i, t in enumerate(self.scheduler.timesteps):
@@ -190,7 +186,6 @@ class InstructPix2Pix(nn.Module):
 
             # get previous sample, continue loop
             latents = self.scheduler.step(noise_pred, t, latents).prev_sample
-
 
         # decode latents to get edited image
         with torch.no_grad():

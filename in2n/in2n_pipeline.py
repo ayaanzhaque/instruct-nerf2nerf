@@ -68,11 +68,12 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
         local_rank: int = 0,
     ):
         super().__init__(config, device, test_mode, world_size, local_rank)
-        self.ip2p_device = (
-            torch.device(device)
-            if self.config.ip2p_device is None
-            else torch.device(self.config.ip2p_device)
-        )
+        # self.ip2p_device = (
+        #     torch.device(device)
+        #     if self.config.ip2p_device is None
+        #     else torch.device(self.config.ip2p_device)
+        # )
+        self.ip2p_device = self.device
 
         self.ip2p = InstructPix2Pix(self.ip2p_device)
 
@@ -121,6 +122,13 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
                 camera_outputs = self.model.get_outputs_for_camera_ray_bundle(current_ray_bundle)
                 original_image = original_image.unsqueeze(dim=0).permute(0, 3, 1, 2)
                 rendered_image = camera_outputs["rgb"].unsqueeze(dim=0).permute(0, 3, 1, 2)
+
+                # delete these to free up memory
+                del camera_outputs
+                del current_camera
+                del current_ray_bundle
+                del camera_transforms
+                torch.cuda.empty_cache()
 
                 edited_image = self.ip2p.edit_image(
                             self.text_embedding.to(self.ip2p_device),

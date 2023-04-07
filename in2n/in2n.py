@@ -25,6 +25,7 @@ import torch
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 from nerfstudio.model_components.losses import (
     L1Loss,
+    MSELoss,
     interlevel_loss,
 )
 from nerfstudio.models.nerfacto import NerfactoModel, NerfactoModelConfig
@@ -35,6 +36,8 @@ class InstructNeRF2NeRFModelConfig(NerfactoModelConfig):
     _target: Type = field(default_factory=lambda: InstructNeRF2NeRFModel)
     use_lpips: bool = False
     """Whether to use LPIPS loss"""
+    use_l1: bool = True
+    """Whether to use L1 loss"""
     patch_size: int = 32
     """Patch size to use for LPIPS loss."""
     lpips_loss_mult: float = 1.0
@@ -49,7 +52,10 @@ class InstructNeRF2NeRFModel(NerfactoModel):
         """Required to use L1 Loss."""
         super().populate_modules()
 
-        self.rgb_loss = L1Loss()
+        if self.config.use_l1:
+            self.rgb_loss = L1Loss()
+        else:
+            self.rgb_loss = MSELoss()
         self.lpips = LearnedPerceptualImagePatchSimilarity()
 
     def get_loss_dict(self, outputs, batch, metrics_dict=None):

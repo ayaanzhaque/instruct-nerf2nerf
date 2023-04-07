@@ -69,11 +69,13 @@ ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_mod
 
 The ```{PROCESSED_DATA_DIR}``` must be the same path as used in training the original NeRF. Using the CLI commands, you can choose the prompt and the guidance scales used for InstructPix2Pix.
 
-**Important**: Please note that training the NeRF on images with resolution than 512 will cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
-
 After the NeRF is trained, you can render the NeRF using the standard Nerfstudio workflow, found [here](https://docs.nerf.studio/en/latest/quickstart/viewer_quickstart.html).
 
 ## Training Notes
+
+Please note that training the NeRF on images with resolution than 512 will cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
+
+We recommend capturing data using images from Polycam, as smaller datasets work better and faster with our method.
 
 If you have multiple GPUs, training can be sped up by placing InstructPix2Pix on a separate GPU. To do so, add ```--pipeline.ip2p-device cuda:{device-number}``` to your training command.
 
