@@ -69,8 +69,10 @@ class InstructNeRF2NeRFDataManager(VanillaDataManager):
             self.train_camera_optimizer,
         )
 
-        # keep a copy of the original image batch
+        # pre-fetch the image batch (how images are replaced in dataset)
         self.image_batch = next(self.iter_train_image_dataloader)
+
+        # keep a copy of the original image batch
         self.original_image_batch = {}
         self.original_image_batch['image'] = self.image_batch['image'].clone()
         self.original_image_batch['image_idx'] = self.image_batch['image_idx'].clone()

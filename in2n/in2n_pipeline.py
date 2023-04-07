@@ -68,6 +68,8 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
         local_rank: int = 0,
     ):
         super().__init__(config, device, test_mode, world_size, local_rank)
+
+        # select device for InstructPix2Pix
         self.ip2p_device = (
             torch.device(device)
             if self.config.ip2p_device is None
@@ -81,6 +83,7 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
             self.config.prompt, device=self.ip2p_device, num_images_per_prompt=1, do_classifier_free_guidance=True, negative_prompt=""
         )
 
+        # keep track of spot in dataset
         if self.datamanager.config.train_num_images_to_sample_from == -1:
             self.train_indices_order = cycle(range(len(self.datamanager.train_dataparser_outputs.image_filenames)))
         else:
@@ -122,7 +125,7 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
                 camera_outputs = self.model.get_outputs_for_camera_ray_bundle(current_ray_bundle)
                 rendered_image = camera_outputs["rgb"].unsqueeze(dim=0).permute(0, 3, 1, 2)
 
-                # delete these to free up memory
+                # delete to free up memory
                 del camera_outputs
                 del current_camera
                 del current_ray_bundle
