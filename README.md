@@ -73,7 +73,7 @@ After the NeRF is trained, you can render the NeRF using the standard Nerfstudio
 
 ## Training Notes
 
-Please note that training the NeRF on images with resolution than 512 will cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
+Currently, training should take between 7-10 GB of memory, depending on the size of your data. Please note that training the NeRF on images with resolution than 512 will cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
 
 We recommend capturing data using images from Polycam, as smaller datasets work better and faster with our method.
 
