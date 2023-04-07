@@ -84,37 +84,8 @@ class InstructPix2Pix(nn.Module):
         self.scheduler = pipe.scheduler
         self.alphas = self.scheduler.alphas_cumprod.to(self.device)  # type: ignore
 
-        # use jitted unet
-        unet_traced_filename = Path(appdirs.user_data_dir("nerfstudio")) / "unet_traced.pt"
-        if unet_traced_filename.exists():
-            CONSOLE.print("Loading traced UNet.")
-            unet_traced = torch.jit.load(unet_traced_filename)
-
-            class TracedUNet(torch.nn.Module):
-                """Jitted version of UNet"""
-
-                def __init__(self):
-                    super().__init__()
-                    self.in_channels = pipe.unet.in_channels
-                    self.device = pipe.unet.device
-
-                def forward(self, latent_model_input, t, encoder_hidden_states):
-                    sample = unet_traced(latent_model_input, t, encoder_hidden_states)[0]
-                    return UNet2DConditionOutput(sample=sample)
-
-            self.unet = TracedUNet()
-            del pipe.unet
-        else:
-            CONSOLE.print(
-                "Warning: Loading UNet without JIT acceleration. Run trace_stablediff.py in the scripts folder for a speedup!"
-            )
-            self.unet = pipe.unet
-            self.unet.to(memory_format=torch.channels_last)
-
         pipe.unet.eval()
         pipe.vae.eval()
-        # pipe.unet.float()
-        # pipe.vae.float()
 
         self.unet = pipe.unet
         self.auto_encoder = pipe.vae
@@ -155,11 +126,10 @@ class InstructPix2Pix(nn.Module):
         self.scheduler.config.num_train_timesteps = T.item()
         self.scheduler.set_timesteps(diffusion_steps)
 
-        # prepare image and image_cond latents
-        latents = self.imgs_to_latent(image)
-
-        # image_cond = image_cond.clone().detach()
-        image_cond_latents = self.prepare_image_latents(image_cond)
+        with torch.no_grad():
+            # prepare image and image_cond latents
+            latents = self.imgs_to_latent(image)
+            image_cond_latents = self.prepare_image_latents(image_cond)
 
         # add noise
         noise = torch.randn_like(latents)
