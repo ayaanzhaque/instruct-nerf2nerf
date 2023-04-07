@@ -61,11 +61,12 @@ class InstructPix2Pix(nn.Module):
         num_train_timesteps: number of training timesteps
     """
 
-    def __init__(self, device: Union[torch.device, str], num_train_timesteps: int = 1000) -> None:
+    def __init__(self, device: Union[torch.device, str], num_train_timesteps: int = 1000, ip2p_use_full_precision=False) -> None:
         super().__init__()
 
         self.device = device
         self.num_train_timesteps = num_train_timesteps
+        self.ip2p_use_full_precision = ip2p_use_full_precision
 
         pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(IP2P_SOURCE, torch_dtype=torch.float16, safety_checker=None)
         pipe.scheduler = DDIMScheduler.from_pretrained(DDIM_SOURCE, subfolder="scheduler")
@@ -86,7 +87,8 @@ class InstructPix2Pix(nn.Module):
         pipe.vae.eval()
 
         # use for improved quality at cost of higher memory
-        if self.use_full_precision:
+        if self.ip2p_use_full_precision:
+            print("Using full precision")
             pipe.unet.float()
             pipe.vae.float()
 

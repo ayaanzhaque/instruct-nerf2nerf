@@ -78,7 +78,7 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
             else torch.device(self.config.ip2p_device)
         )
 
-        self.ip2p = InstructPix2Pix(self.ip2p_device)
+        self.ip2p = InstructPix2Pix(self.ip2p_device, ip2p_use_full_precision=self.config.ip2p_use_full_precision)
 
         # load base text embedding using classifier free guidance
         self.text_embedding = self.ip2p.pipe._encode_prompt(
