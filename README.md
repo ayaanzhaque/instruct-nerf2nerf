@@ -4,40 +4,20 @@ This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-ner
 
 # Installation
 
-Instruct-NeRF2NeRF follows the integration guidelines described [here](https://docs.nerf.studio/en/latest/developer_guides/new_methods.html) for custom methods within Nerfstudio.
+## 1. Install Nerfstudio dependencies
 
-Follow the instructions [at this link](https://github.com/nerfstudio-project/nerfstudio/blob/main/README.md#1-installation-setup-the-environment) to create the environment and install dependencies. After the dependencies have been installed, return here. The instructions have been copied here for convenience.
+Instruct-NeRF2NeRF is build on Nerfstudio and therefore has the same dependency reqirements. Specfically [PyTorch](https://pytorch.org/) and [tinycudann](https://github.com/NVlabs/tiny-cuda-nn) are required.
 
-### Prerequisites
+Follow the instructions [at this link](https://docs.nerf.studio/en/latest/quickstart/installation.html#dependencies) to create the environment and install dependencies. After the dependencies have been installed, return here. 
 
-You must have an NVIDIA video card with CUDA installed on the system. This library has been tested with version 11.3 of CUDA. You can find more information about installing CUDA [here](https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html)
+## 2. Installing Instruct-NeRF2NeRF
 
-### Create environment
-
-Nerfstudio requires `python >= 3.7`. We recommend using conda to manage dependencies. Make sure to install [Conda](https://docs.conda.io/en/latest/miniconda.html) before proceeding.
-
+Once you have finished installing dependencies, you can install Instruct-NeRF2NeRF using the following command:
 ```bash
-conda create --name in2n -y python=3.8
-conda activate in2n
-python -m pip install --upgrade pip
+pip install git+https://github.com/ayaanzhaque/instruct-nerf2nerf
 ```
 
-### Dependencies
-
-Install pytorch with CUDA (this repo has been tested with CUDA 11.3 and CUDA 11.7) and [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn)
-
-```bash
-pip install torch==1.13.1 torchvision functorch --extra-index-url https://download.pytorch.org/whl/cu117
-pip install ninja git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
-```
-
-See [Dependencies](https://github.com/nerfstudio-project/nerfstudio/blob/main/docs/quickstart/installation.md#dependencies)
-in the Installation documentation for more.
-
-### Installing Instruct-NeRF2NeRF
-
-Once you have finished installing dependencies, you can install Instruct-NeRF2NeRF using the following commands:
-
+_Optional_: If you would like to work with the code directly, clone then install the repo:
 ```bash
 git clone https://github.com/ayaanzhaque/instruct-nerf2nerf.git
 cd instruct-nerf2nerf
@@ -45,8 +25,12 @@ pip install --upgrade pip setuptools
 pip install -e .
 ```
 
-### Checking the install
-Run ```ns-train -h```: you should see a list of "subcommands" with in2n.
+## 3. Checking the install
+
+The following command should include `in2n` as one of the options:
+```bash
+ns-train -h
+```
 
 # Using Instruct-NeRF2NeRF
 To edit a NeRF, you must first train a regular ```nerfacto``` scene using your data. To process your custom data, please refer to [this](https://docs.nerf.studio/en/latest/quickstart/custom_dataset.html) documentation.
