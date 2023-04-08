@@ -61,9 +61,9 @@ We provide 3 variations of our method which all use different amounts of memory.
 
 | Method | Precision of InstructPix2Pix | LPIPS? | Memory |
 | ---------------------------------------------------------------------------------------------------- | -------------- | ----------------------------------------------------------------- | ----------------------- |
-| in2n-big | Full | Yes | ~15GB |
-| in2n | Half | Yes | ~10GB |
-| in2n-lite | Half | No | ~8GB |
+| ```in2n-big``` | Full | Yes | <15GB |
+| ```in2n``` | Half | Yes | <12GB |
+| ```in2n-lite``` | Half | No | <10GB |
 
 Please note that training the NeRF on images with resolution larger than 512 will likely cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
 
@@ -75,6 +75,7 @@ If you have multiple GPUs, training can be sped up by placing InstructPix2Pix on
 
 ### Issues
 Please open Github issues for any installation/usage problems you run into. We've tried to support as broad a range of GPUs as possible, but it might be necessary to provide even more low-footprint versions. Please contribute with any changes to improve memory usage!
+
 ### Code structure
 To build off Instruct-NeRF2NeRF, we provide explanations of the core code components.
 
