@@ -34,7 +34,7 @@ from nerfstudio.models.nerfacto import NerfactoModel, NerfactoModelConfig
 class InstructNeRF2NeRFModelConfig(NerfactoModelConfig):
     """Configuration for the InstructNeRF2NeRFModel."""
     _target: Type = field(default_factory=lambda: InstructNeRF2NeRFModel)
-    use_lpips: bool = False
+    use_lpips: bool = True
     """Whether to use LPIPS loss"""
     use_l1: bool = True
     """Whether to use L1 loss"""

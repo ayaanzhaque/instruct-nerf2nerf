@@ -53,7 +53,7 @@ class InstructNeRF2NeRFPipelineConfig(VanillaPipelineConfig):
     """Upper bound for diffusion timesteps to use for image editing"""
     ip2p_device: Optional[str] = None
     """Second device to place InstructPix2Pix on. If None, will use the same device as the pipeline"""
-    ip2p_use_full_precision: bool = False
+    ip2p_use_full_precision: bool = True
     """Whether to use full precision for InstructPix2Pix"""
 
 class InstructNeRF2NeRFPipeline(VanillaPipeline):
