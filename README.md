@@ -2,6 +2,10 @@
 
 This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-nerf2nerf.github.io/).
 
+<video id="teaser" muted autoplay playsinline loop controls width="100%">
+    <source id="mp4" src="https://instruct-nerf2nerf.github.io/data/videos/face.mp4" type="video/mp4">
+</video>
+
 # Installation
 
 ## 1. Install Nerfstudio dependencies
@@ -33,6 +37,11 @@ ns-train -h
 ```
 
 # Using Instruct-NeRF2NeRF
+
+<video id="pipeline" muted autoplay playsinline loop controls width="100%">
+    <source id="mp4" src="https://instruct-nerf2nerf.github.io/data/videos/pipeline_animation.mp4" type="video/mp4">
+</video>
+
 To edit a NeRF, you must first train a regular ```nerfacto``` scene using your data. To process your custom data, please refer to [this](https://docs.nerf.studio/en/latest/quickstart/custom_dataset.html) documentation.
 
 Once you have your custom data, you can train your initial NeRF with the following command:
