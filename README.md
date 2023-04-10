@@ -57,7 +57,7 @@ After the NeRF is trained, you can render the NeRF using the standard Nerfstudio
 
 ## Training Notes
 
-We provide 3 variations of our method which all use different amounts of memory. The differences are the precision used for IntructPix2Pix and whether LPIPS is used (which requires 4x more rays). In our paper, we use ```in2n-big```, which uses LPIPs, ~16000 rays for batch, and InstructPix2Pix at full precision. We find that LPIPS is very important for quality, but using half precision only leads to minor decreases in performance. Thus, the standard ```in2n``` uses LPIPs. The details of each config is provided in the table below.
+Our method uses ~16K rays and LPIPS, but not all GPUs have enough memory to run this configuration. As a result, we have provided two alternative configurations which use less memory, but be aware that these configurations lead to decreased performance. The differences are the precision used for IntructPix2Pix and whether LPIPS is used (which requires 4x more rays). The details of each config is provided in the table below.
 
 | Method | Precision of InstructPix2Pix | LPIPS? | Memory |
 | ---------------------------------------------------------------------------------------------------- | -------------- | ----------------------------------------------------------------- | ----------------------- |
