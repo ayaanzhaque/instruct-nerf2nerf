@@ -78,7 +78,11 @@ class InstructPix2Pix(nn.Module):
 
         # improve memory performance
         pipe.enable_attention_slicing()
-        pipe.enable_model_cpu_offload(self.device.index)
+
+        if self.device.index:
+            pipe.enable_model_cpu_offload(self.device.index)
+        else:
+            pipe.enable_model_cpu_offload(0)
 
         self.scheduler = pipe.scheduler
         self.alphas = self.scheduler.alphas_cumprod.to(self.device)  # type: ignore
