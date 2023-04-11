@@ -22,7 +22,7 @@ from nerfstudio.data.dataparsers.nerfstudio_dataparser import NerfstudioDataPars
 from nerfstudio.engine.optimizers import AdamOptimizerConfig
 from nerfstudio.plugins.types import MethodSpecification
 
-from in2n.data.in2n_datamanager import InstructNeRF2NeRFDataManagerConfig
+from in2n.in2n_datamanager import InstructNeRF2NeRFDataManagerConfig
 from in2n.in2n import InstructNeRF2NeRFModelConfig
 from in2n.in2n_pipeline import InstructNeRF2NeRFPipelineConfig
 from in2n.in2n_trainer import InstructNeRF2NeRFTrainerConfig

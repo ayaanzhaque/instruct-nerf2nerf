@@ -21,7 +21,7 @@ import torch
 from typing_extensions import Literal
 from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineConfig
 
-from in2n.data.in2n_datamanager import (
+from in2n.in2n_datamanager import (
     InstructNeRF2NeRFDataManagerConfig,
 )
 from in2n.ip2p import InstructPix2Pix
