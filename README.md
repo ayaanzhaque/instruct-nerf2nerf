@@ -95,3 +95,18 @@ To build off Instruct-NeRF2NeRF, we provide explanations of the core code compon
 ```ip2p.py```: This file houses the InstructPix2Pix model (using the ```diffusers``` implementation). The ```edit_image``` method is where an image is denoised using the diffusion model, and a variety of helper methods are contained in this file as well.
 
 ```in2n.py```: We overwrite the ```get_loss_dict``` method to use LPIPs loss and L1Loss.
+
+# Citation
+
+You can find our paper on [arXiv](https://arxiv.org/abs/2303.12789).
+
+If you find this code or find the paper useful for your research, please consider citing:
+
+```
+@article{instructnerf2023,
+    author = {Haque, Ayaan and Tancik, Matthew and Efros, Alexei and Holynski, Aleksander and Kanazawa, Angjoo},
+    title = {Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions},
+    booktitle = {arXiv preprint 2303.12789},
+    year = {2023},
+} 
+```
