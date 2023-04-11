@@ -68,11 +68,11 @@ After the NeRF is trained, you can render the NeRF using the standard Nerfstudio
 
 Our method uses ~16K rays and LPIPS, but not all GPUs have enough memory to run this configuration. As a result, we have provided two alternative configurations which use less memory, but be aware that these configurations lead to decreased performance. The differences are the precision used for IntructPix2Pix and whether LPIPS is used (which requires 4x more rays). The details of each config is provided in the table below.
 
-| Method | Precision of InstructPix2Pix | LPIPS? | Memory |
+| Method | Description | Memory | Quality |
 | ---------------------------------------------------------------------------------------------------- | -------------- | ----------------------------------------------------------------- | ----------------------- |
-| ```in2n-big``` | Full | Yes | <15GB |
-| ```in2n``` | Half | Yes | <12GB |
-| ```in2n-lite``` | Half | No | <10GB |
+| ```in2n``` | Full model, used in paper | ~15GB | Best |
+| ```in2n-small``` | Half precision model | ~12GB | Good |
+| ```in2n-tiny``` | Half precision with no LPIPS | ~10GB | Ok |
 
 Please note that training the NeRF on images with resolution larger than 512 will likely cause InstructPix2Pix to throw OOM errors. You can either downscale your dataset yourself and update your ```transforms.json``` file (scale down w, h, fl_x, fl_y, cx, cy), or you can use a smaller image scale provided by Nerfstudio. You can add ```nerfstudio-data --downscale-factor {2,4,6,8}``` to the end of your ```ns-train``` commands.
 

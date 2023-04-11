@@ -27,9 +27,9 @@ from in2n.in2n import InstructNeRF2NeRFModelConfig
 from in2n.in2n_pipeline import InstructNeRF2NeRFPipelineConfig
 from in2n.in2n_trainer import InstructNeRF2NeRFTrainerConfig
 
-in2n_method_big = MethodSpecification(
+in2n_method = MethodSpecification(
     config=InstructNeRF2NeRFTrainerConfig(
-        method_name="in2n-big",
+        method_name="in2n",
         steps_per_eval_batch=1000,
         steps_per_eval_image=100,
         steps_per_save=250,
@@ -65,12 +65,12 @@ in2n_method_big = MethodSpecification(
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
         vis="viewer",
     ),
-    description="Instruct-NeRF2NeRF Big method: uses LPIPS, IP2P at full precision",
+    description="Instruct-NeRF2NeRF primary method: uses LPIPS, IP2P at full precision",
 )
 
-in2n_method = MethodSpecification(
+in2n_method_small = MethodSpecification(
     config=InstructNeRF2NeRFTrainerConfig(
-        method_name="in2n",
+        method_name="in2n-small",
         steps_per_eval_batch=1000,
         steps_per_eval_image=100,
         steps_per_save=250,
@@ -90,7 +90,8 @@ in2n_method = MethodSpecification(
             model=InstructNeRF2NeRFModelConfig(
                 eval_num_rays_per_chunk=1 << 15,
                 use_lpips=True,
-            )
+            ),
+            ip2p_use_full_precision=False,
         ),
         optimizers={
             "proposal_networks": {
@@ -105,12 +106,12 @@ in2n_method = MethodSpecification(
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
         vis="viewer",
     ),
-    description="Instruct-NeRF2NeRF method: https://instruct-nerf2nerf.github.io/",
+    description="Instruct-NeRF2NeRF small method, uses LPIPs, IP2P at half precision",
 )
 
-in2n_method_lite = MethodSpecification(
+in2n_method_tiny = MethodSpecification(
     config=InstructNeRF2NeRFTrainerConfig(
-        method_name="in2n-lite",
+        method_name="in2n-tiny",
         steps_per_eval_batch=1000,
         steps_per_eval_image=100,
         steps_per_save=250,
@@ -122,11 +123,16 @@ in2n_method_lite = MethodSpecification(
                 dataparser=NerfstudioDataParserConfig(),
                 train_num_rays_per_batch=4096,
                 eval_num_rays_per_batch=4096,
+                patch_size=1,
                 camera_optimizer=CameraOptimizerConfig(
                     mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=1e-30, eps=1e-8, weight_decay=1e-2)
                 ),
             ),
-            model=InstructNeRF2NeRFModelConfig(eval_num_rays_per_chunk=1 << 15),
+            model=InstructNeRF2NeRFModelConfig(
+                eval_num_rays_per_chunk=1 << 15,
+                use_lpips=False,
+            ),
+            ip2p_use_full_precision=False,
         ),
         optimizers={
             "proposal_networks": {
@@ -141,5 +147,5 @@ in2n_method_lite = MethodSpecification(
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
         vis="viewer",
     ),
-    description="Instruct-NeRF2NeRF Lite method, does not use LPIPs, IP2P at half precision",
+    description="Instruct-NeRF2NeRF tiny method, does not use LPIPs, IP2P at half precision",
 )
