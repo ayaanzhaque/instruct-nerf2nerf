@@ -84,7 +84,7 @@ Please open Github issues for any installation/usage problems you run into. We'v
 ### Code structure
 To build off Instruct-NeRF2NeRF, we provide explanations of the core code components.
 
-```data/in2n_datamanager.py```: This file is almost identical to the ```base_datamanager.py``` in Nerfstudio. The main difference is that the entire dataset tensor is pre-computed in the ```setup_train``` method as opposed to being sampled in the ```next_train``` method each time.
+```in2n_datamanager.py```: This file is almost identical to the ```base_datamanager.py``` in Nerfstudio. The main difference is that the entire dataset tensor is pre-computed in the ```setup_train``` method as opposed to being sampled in the ```next_train``` method each time.
 
 ```in2n_pipeline.py```: This file builds on the pipeline module in Nerfstudio. The ```get_train_loss_dict``` method samples images and places edited images back into the dataset.
 
