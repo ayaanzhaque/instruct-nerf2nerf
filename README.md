@@ -10,7 +10,7 @@ This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-ner
 
 Instruct-NeRF2NeRF is build on Nerfstudio and therefore has the same dependency reqirements. Specfically [PyTorch](https://pytorch.org/) and [tinycudann](https://github.com/NVlabs/tiny-cuda-nn) are required.
 
-Follow the instructions [at this link](https://docs.nerf.studio/en/latest/quickstart/installation.html#dependencies) to create the environment and install dependencies. Only follow the commands up to tinycudann. After the dependencies have been installed, return here.
+Follow the instructions [at this link](https://docs.nerf.studio/en/latest/quickstart/installation.html) to create the environment and install dependencies. Only follow the commands up to tinycudann. After the dependencies have been installed, return here.
 
 ## 2. Installing Instruct-NeRF2NeRF
 
