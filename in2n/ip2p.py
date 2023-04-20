@@ -79,11 +79,6 @@ class InstructPix2Pix(nn.Module):
         # improve memory performance
         pipe.enable_attention_slicing()
 
-        if self.device.index:
-            pipe.enable_model_cpu_offload(self.device.index)
-        else:
-            pipe.enable_model_cpu_offload(0)
-
         self.scheduler = pipe.scheduler
         self.alphas = self.scheduler.alphas_cumprod.to(self.device)  # type: ignore
 
@@ -92,9 +87,13 @@ class InstructPix2Pix(nn.Module):
 
         # use for improved quality at cost of higher memory
         if self.ip2p_use_full_precision:
-            print("Using full precision")
             pipe.unet.float()
             pipe.vae.float()
+        else:
+            if self.device.index:
+                pipe.enable_model_cpu_offload(self.device.index)
+            else:
+                pipe.enable_model_cpu_offload(0)
 
         self.unet = pipe.unet
         self.auto_encoder = pipe.vae

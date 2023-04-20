@@ -37,7 +37,7 @@ class InstructNeRF2NeRFPipelineConfig(VanillaPipelineConfig):
     """specifies the datamanager config"""
     prompt: str = "don't change the image"
     """prompt for InstructPix2Pix"""
-    guidance_scale: float = 12.0
+    guidance_scale: float = 7.5
     """(text) guidance scale for InstructPix2Pix"""
     image_guidance_scale: float = 1.5
     """image guidance scale for InstructPix2Pix"""
