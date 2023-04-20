@@ -77,6 +77,8 @@ Our method uses ~16K rays and LPIPS, but not all GPUs have enough memory to run 
 | `in2n-small` | Half precision model | ~12GB | Good |
 | `in2n-tiny` | Half precision with no LPIPS | ~10GB | Ok |
 
+Currently, we set the max number of iterations for `in2n` training to be 15k iteratios. Most often, the edit will look good after ~10k iterations. If you would like to train for longer, just reload your last `in2n` checkpoint and continue training, or change `--max-num-iterations 30000`.
+
 ## Tips
 
 If your edit isn't working as you desire, it is likely because InstructPix2Pix struggles with your images and prompt. We recommend taking one of your training views and trying to edit it in 2D first with InstructPix2Pix, which can be done at [this](https://huggingface.co/spaces/timbrooks/instruct-pix2pix) HuggingFace space. More tips on getting a good edit can be found [here](https://github.com/timothybrooks/instruct-pix2pix#tips).
