@@ -20,7 +20,7 @@ from typing import Optional, Type
 import torch
 from typing_extensions import Literal
 from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineConfig
-from nerfstudio.viewer.server.viewer_elements import *
+from nerfstudio.viewer.server.viewer_elements import ViewerNumber, ViewerText
 
 from in2n.in2n_datamanager import (
     InstructNeRF2NeRFDataManagerConfig,
