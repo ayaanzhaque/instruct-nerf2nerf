@@ -20,6 +20,7 @@ from typing import Optional, Type
 import torch
 from typing_extensions import Literal
 from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineConfig
+from nerfstudio.viewer.server.viewer_elements import *
 
 from in2n.in2n_datamanager import (
     InstructNeRF2NeRFDataManagerConfig,
@@ -91,6 +92,27 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
         else:
             self.train_indices_order = cycle(range(self.datamanager.config.train_num_images_to_sample_from))
 
+        # viewer elements
+        self.prompt_box = ViewerText(name="Prompt", default_value=self.config.prompt, cb_hook=self.prompt_callback)
+        self.guidance_scale_box = ViewerNumber(name="Text Guidance Scale", default_value=self.config.guidance_scale, cb_hook=self.guidance_scale_callback)
+        self.image_guidance_scale_box = ViewerNumber(name="Image Guidance Scale", default_value=self.config.image_guidance_scale, cb_hook=self.image_guidance_scale_callback)
+
+
+    def guidance_scale_callback(self, handle: ViewerText) -> None:
+        """Callback for guidance scale slider"""
+        self.config.guidance_scale = handle.value
+
+    def image_guidance_scale_callback(self, handle: ViewerText) -> None:
+        """Callback for text guidance scale slider"""
+        self.config.image_guidance_scale = handle.value
+
+    def prompt_callback(self, handle: ViewerText) -> None:
+        """Callback for prompt box, change prompt in config and update text embedding"""
+        self.config.prompt = handle.value
+        
+        self.text_embedding = self.ip2p.pipe._encode_prompt(
+            self.config.prompt, device=self.ip2p_device, num_images_per_prompt=1, do_classifier_free_guidance=True, negative_prompt=""
+        )
 
     def get_train_loss_dict(self, step: int):
         """This function gets your training loss dict and performs image editing.
