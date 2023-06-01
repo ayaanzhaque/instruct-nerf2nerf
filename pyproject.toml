@@ -3,7 +3,7 @@ name = "in2n"
 version = "0.1.0"
 
 dependencies=[
-    "nerfstudio",
+    "nerfstudio>=0.2.0",
     "clip @ git+https://github.com/openai/CLIP.git",
     "diffusers>=0.14.0.dev0",
     "transformers>=4.26.1",
