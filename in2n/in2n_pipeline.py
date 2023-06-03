@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from itertools import cycle
 from typing import Optional, Type
 import torch
+from torch.cuda.amp.grad_scaler import GradScaler
 from typing_extensions import Literal
 from nerfstudio.pipelines.base_pipeline import VanillaPipeline, VanillaPipelineConfig
 from nerfstudio.viewer.server.viewer_elements import ViewerNumber, ViewerText
@@ -69,8 +70,9 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
         test_mode: Literal["test", "val", "inference"] = "val",
         world_size: int = 1,
         local_rank: int = 0,
+        grad_scaler: Optional[GradScaler] = None,
     ):
-        super().__init__(config, device, test_mode, world_size, local_rank)
+        super().__init__(config, device, test_mode, world_size, local_rank, grad_scaler)
 
         # select device for InstructPix2Pix
         self.ip2p_device = (

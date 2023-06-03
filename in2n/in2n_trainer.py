@@ -19,6 +19,7 @@ from dataclasses import dataclass, field
 from typing import Type
 import torch
 from nerfstudio.engine.trainer import Trainer, TrainerConfig
+from nerfstudio.viewer.server.viewer_elements import ViewerButton
 from nerfstudio.utils.decorators import check_main_thread
 
 @dataclass
@@ -28,7 +29,24 @@ class InstructNeRF2NeRFTrainerConfig(TrainerConfig):
 
 
 class InstructNeRF2NeRFTrainer(Trainer):
-    """Trainer for InstructNeRF2NeRF (only difference is that it doesn't save InstructPix2Pix checkpoints)"""
+    """Trainer for InstructNeRF2NeRF"""
+
+    def __init__(self, config: TrainerConfig, local_rank: int = 0, world_size: int = 1) -> None:
+
+        super().__init__(config, local_rank, world_size)
+
+        # reset button
+        self.reset_button = ViewerButton(name="Reset Button", cb_hook=self.reset_callback)
+
+    def reset_callback(self, handle: ViewerButton) -> None:
+        """Reset the model to the original checkpoint"""
+        
+        # load checkpoint
+        self._load_checkpoint()
+
+        # reset dataset
+        self.config.pipeline.datamanager.image_batch['image'] = self.config.pipeline.datamanager.original_image_batch['image'].clone()
+        self.config.pipeline.datamanager.image_batch['image_idx'] = self.config.pipeline.datamanager.original_image_batch['image_idx'].clone()
 
     @check_main_thread
     def save_checkpoint(self, step: int) -> None:
