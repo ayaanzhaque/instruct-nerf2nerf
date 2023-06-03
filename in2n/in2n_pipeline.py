@@ -72,7 +72,7 @@ class InstructNeRF2NeRFPipeline(VanillaPipeline):
         local_rank: int = 0,
         grad_scaler: Optional[GradScaler] = None,
     ):
-        super().__init__(config, device, test_mode, world_size, local_rank, grad_scaler)
+        super().__init__(config, device, test_mode, world_size, local_rank)
 
         # select device for InstructPix2Pix
         self.ip2p_device = (
