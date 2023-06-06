@@ -22,8 +22,8 @@ from typing import Union
 
 import torch
 from rich.console import Console
-from torch import nn
-from torchtyping import TensorType
+from torch import Tensor, nn
+from jaxtyping import Float
 
 CONSOLE = Console(width=120)
 
@@ -102,9 +102,9 @@ class InstructPix2Pix(nn.Module):
 
     def edit_image(
         self,
-        text_embeddings: TensorType["N", "max_length", "embed_dim"],
-        image: TensorType["BS", 3, "H", "W"],
-        image_cond: TensorType["BS", 3, "H", "W"],  
+        text_embeddings: Float[Tensor, "N max_length embed_dim"],
+        image: Float[Tensor, "BS 3 H W"],
+        image_cond: Float[Tensor, "BS 3 H W"],
         guidance_scale: float = 7.5,
         image_guidance_scale: float = 1.5,
         diffusion_steps: int = 20,
@@ -171,7 +171,7 @@ class InstructPix2Pix(nn.Module):
 
         return decoded_img
 
-    def latents_to_img(self, latents: TensorType["BS", 4, "H", "W"]) -> TensorType["BS", 3, "H", "W"]:
+    def latents_to_img(self, latents: Float[Tensor, "BS 4 H W"]) -> Float[Tensor, "BS 3 H W"]:
         """Convert latents to images
         Args:
             latents: Latents to convert
@@ -188,7 +188,7 @@ class InstructPix2Pix(nn.Module):
 
         return imgs
 
-    def imgs_to_latent(self, imgs: TensorType["BS", 3, "H", "W"]) -> TensorType["BS", 4, "H", "W"]:
+    def imgs_to_latent(self, imgs: Float[Tensor, "BS 3 H W"]) -> Float[Tensor, "BS 4 H W"]:
         """Convert images to latents
         Args:
             imgs: Images to convert
@@ -202,7 +202,7 @@ class InstructPix2Pix(nn.Module):
 
         return latents
 
-    def prepare_image_latents(self, imgs: TensorType["BS", 3, "H", "W"]) -> TensorType["BS", 4, "H", "W"]:
+    def prepare_image_latents(self, imgs: Float[Tensor, "BS 3 H W"]) -> Float[Tensor, "BS 4 H W"]:
         """Convert conditioning image to latents used for classifier-free guidance
         Args:
             imgs: Images to convert
