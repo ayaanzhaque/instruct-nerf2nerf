@@ -106,10 +106,10 @@ You can find our paper on [arXiv](https://arxiv.org/abs/2303.12789).
 If you find this code or find the paper useful for your research, please consider citing:
 
 ```
-@article{instructnerf2023,
+@inproceedings{instructnerf2023,
     author = {Haque, Ayaan and Tancik, Matthew and Efros, Alexei and Holynski, Aleksander and Kanazawa, Angjoo},
     title = {Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions},
-    booktitle = {arXiv preprint 2303.12789},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision},
     year = {2023},
-} 
+}
 ```
