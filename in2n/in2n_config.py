@@ -20,6 +20,7 @@ from nerfstudio.cameras.camera_optimizers import CameraOptimizerConfig
 from nerfstudio.configs.base_config import ViewerConfig
 from nerfstudio.data.dataparsers.nerfstudio_dataparser import NerfstudioDataParserConfig
 from nerfstudio.engine.optimizers import AdamOptimizerConfig
+from nerfstudio.engine.schedulers import ExponentialDecaySchedulerConfig
 from nerfstudio.plugins.types import MethodSpecification
 
 from in2n.in2n_datamanager import InstructNeRF2NeRFDataManagerConfig
@@ -43,7 +44,9 @@ in2n_method = MethodSpecification(
                 eval_num_rays_per_batch=4096,
                 patch_size=32,
                 camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=1e-30, eps=1e-8, weight_decay=1e-2)
+                    mode="SO3xR3",
+                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
                 ),
             ),
             model=InstructNeRF2NeRFModelConfig(
@@ -55,11 +58,11 @@ in2n_method = MethodSpecification(
         optimizers={
             "proposal_networks": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -84,7 +87,9 @@ in2n_method_small = MethodSpecification(
                 eval_num_rays_per_batch=4096,
                 patch_size=32,
                 camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=1e-30, eps=1e-8, weight_decay=1e-2)
+                    mode="SO3xR3",
+                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
                 ),
             ),
             model=InstructNeRF2NeRFModelConfig(
@@ -96,11 +101,11 @@ in2n_method_small = MethodSpecification(
         optimizers={
             "proposal_networks": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -125,7 +130,9 @@ in2n_method_tiny = MethodSpecification(
                 eval_num_rays_per_batch=4096,
                 patch_size=1,
                 camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3", optimizer=AdamOptimizerConfig(lr=1e-30, eps=1e-8, weight_decay=1e-2)
+                    mode="SO3xR3",
+                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
                 ),
             ),
             model=InstructNeRF2NeRFModelConfig(
@@ -137,11 +144,11 @@ in2n_method_tiny = MethodSpecification(
         optimizers={
             "proposal_networks": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-                "scheduler": None,
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
