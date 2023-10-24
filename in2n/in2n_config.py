@@ -43,15 +43,11 @@ in2n_method = MethodSpecification(
                 train_num_rays_per_batch=16384,
                 eval_num_rays_per_batch=4096,
                 patch_size=32,
-                camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3",
-                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-                ),
             ),
             model=InstructNeRF2NeRFModelConfig(
                 eval_num_rays_per_chunk=1 << 15,
                 use_lpips=True,
+                camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
             ),
             ip2p_use_full_precision=True
         ),
@@ -63,6 +59,10 @@ in2n_method = MethodSpecification(
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
                 "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
+            },
+            "camera_opt": {
+                "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -86,15 +86,11 @@ in2n_method_small = MethodSpecification(
                 train_num_rays_per_batch=16384,
                 eval_num_rays_per_batch=4096,
                 patch_size=32,
-                camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3",
-                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-                ),
             ),
             model=InstructNeRF2NeRFModelConfig(
                 eval_num_rays_per_chunk=1 << 15,
                 use_lpips=True,
+                camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
             ),
             ip2p_use_full_precision=False,
         ),
@@ -106,6 +102,10 @@ in2n_method_small = MethodSpecification(
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
                 "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
+            },
+            "camera_opt": {
+                "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -129,15 +129,11 @@ in2n_method_tiny = MethodSpecification(
                 train_num_rays_per_batch=4096,
                 eval_num_rays_per_batch=4096,
                 patch_size=1,
-                camera_optimizer=CameraOptimizerConfig(
-                    mode="SO3xR3",
-                    optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                    scheduler=ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
-                ),
             ),
             model=InstructNeRF2NeRFModelConfig(
                 eval_num_rays_per_chunk=1 << 15,
                 use_lpips=False,
+                camera_optimizer=CameraOptimizerConfig(mode="SO3xR3"),
             ),
             ip2p_use_full_precision=False,
         ),
@@ -149,6 +145,10 @@ in2n_method_tiny = MethodSpecification(
             "fields": {
                 "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
                 "scheduler": ExponentialDecaySchedulerConfig(lr_final=0.0001, max_steps=200000),
+            },
+            "camera_opt": {
+                "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),

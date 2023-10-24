@@ -61,13 +61,7 @@ class InstructNeRF2NeRFDataManager(VanillaDataManager):
         )
         self.iter_train_image_dataloader = iter(self.train_image_dataloader)
         self.train_pixel_sampler = self._get_pixel_sampler(self.train_dataset, self.config.train_num_rays_per_batch)
-        self.train_camera_optimizer = self.config.camera_optimizer.setup(
-            num_cameras=self.train_dataset.cameras.size, device=self.device
-        )
-        self.train_ray_generator = RayGenerator(
-            self.train_dataset.cameras.to(self.device),
-            self.train_camera_optimizer,
-        )
+        self.train_ray_generator = RayGenerator(self.train_dataset.cameras.to(self.device),)
 
         # pre-fetch the image batch (how images are replaced in dataset)
         self.image_batch = next(self.iter_train_image_dataloader)
