@@ -62,7 +62,7 @@ in2n_method = MethodSpecification(
             },
             "camera_opt": {
                 "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=5000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -105,7 +105,7 @@ in2n_method_small = MethodSpecification(
             },
             "camera_opt": {
                 "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=5000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
@@ -148,7 +148,7 @@ in2n_method_tiny = MethodSpecification(
             },
             "camera_opt": {
                 "optimizer": AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2),
-                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=200000),
+                "scheduler": ExponentialDecaySchedulerConfig(lr_final=6e-6, max_steps=5000),
             },
         },
         viewer=ViewerConfig(num_rays_per_chunk=1 << 15),
