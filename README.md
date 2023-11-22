@@ -10,7 +10,7 @@ This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-ner
 
 Instruct-NeRF2NeRF is build on Nerfstudio and therefore has the same dependency reqirements. Specfically [PyTorch](https://pytorch.org/) and [tinycudann](https://github.com/NVlabs/tiny-cuda-nn) are required.
 
-Follow the instructions [at this link](https://docs.nerf.studio/en/latest/quickstart/installation.html) to create the environment and install dependencies. Only follow the commands up to tinycudann. After the dependencies have been installed, return here.
+Follow the instructions [at this link](https://docs.nerf.studio/quickstart/installation.html) to create the environment and install dependencies. Only follow the commands up to tinycudann. After the dependencies have been installed, return here.
 
 ## 2. Installing Instruct-NeRF2NeRF
 
@@ -38,7 +38,7 @@ ns-train -h
 
 ![teaser](imgs/in2n_pipeline.png)
 
-To edit a NeRF, you must first train a regular `nerfacto` scene using your data. To process your custom data, please refer to [this](https://docs.nerf.studio/en/latest/quickstart/custom_dataset.html) documentation.
+To edit a NeRF, you must first train a regular `nerfacto` scene using your data. To process your custom data, please refer to [this](https://docs.nerf.studio/quickstart/custom_dataset.html) documentation.
 
 Once you have your custom data, you can train your initial NeRF with the following command:
 
@@ -46,7 +46,7 @@ Once you have your custom data, you can train your initial NeRF with the followi
 ns-train nerfacto --data {PROCESSED_DATA_DIR}
 ```
 
-For more details on training a NeRF, see [Nerfstudio documentation](https://docs.nerf.studio/en/latest/quickstart/first_nerf.html).
+For more details on training a NeRF, see [Nerfstudio documentation](https://docs.nerf.studio/quickstart/first_nerf.html).
 
 Once you have fully trained your scene, the checkpoints will be saved to the `outputs` directory. Copy the path to the `nerfstudio_models` folder.
 
@@ -58,7 +58,7 @@ ns-train in2n --data {PROCESSED_DATA_DIR} --load-dir {outputs/.../nerfstudio_mod
 
 The `{PROCESSED_DATA_DIR}` must be the same path as used in training the original NeRF. Using the CLI commands, you can choose the prompt and the guidance scales used for InstructPix2Pix.
 
-After the NeRF is trained, you can render the NeRF using the standard Nerfstudio workflow, found [here](https://docs.nerf.studio/en/latest/quickstart/viewer_quickstart.html).
+After the NeRF is trained, you can render the NeRF using the standard Nerfstudio workflow, found [here](https://docs.nerf.studio/quickstart/viewer_quickstart.html).
 
 ## Training Notes
 
