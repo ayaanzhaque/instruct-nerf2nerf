@@ -4,6 +4,9 @@ This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-ner
 
 ![teaser](imgs/in2n_teaser.png)
 
+# Continuous Editing
+Use `update_imgs.py` to load an edited scene and update input images. Then, use a new prompt to start a new round of editing.
+
 # Installation
 
 ## 1. Install Nerfstudio dependencies
