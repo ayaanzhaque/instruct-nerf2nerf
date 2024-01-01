@@ -38,12 +38,9 @@ def main():
     config, pipeline, checkpoint_path, _ = eval_setup(check_point)
     model=pipeline.model
     print('pipeline datamanager',pipeline.datamanager)
-    print("model outputs for camera ray bundle",model.get_outputs_for_camera_ray_bundle)
     print('pipeline train indices order',pipeline.train_indices_order)
     length_of_original_list = find_length_of_original_iterable(pipeline.train_indices_order)
-    print("len of pipeline train indices order:",length_of_original_list)  # This will print 3, the length of my_list
-    # print("len of pipeline train indices order:",len(pipeline.train_indices_order))
-    # Rest of your code4
+    print("len of pipeline train indices order:",length_of_original_list)  
     for i in range(length_of_original_list):
         current_spot = next(pipeline.train_indices_order)
         print('spot:',current_spot)
@@ -55,7 +52,7 @@ def main():
         
         # get current camera, include camera transforms from original optimizer
         camera_transforms = pipeline.model.camera_optimizer(current_index.unsqueeze(dim=0))
-        print('index_to_camera_transforms:',current_index,camera_transforms)
+        
         current_camera = pipeline.datamanager.train_dataparser_outputs.cameras[current_index].to(pipeline.device)
         current_ray_bundle = current_camera.generate_rays(torch.tensor(list(range(1))).unsqueeze(-1), camera_opt_to_camera=camera_transforms)
 
@@ -63,7 +60,7 @@ def main():
         original_image = original_image.unsqueeze(dim=0).permute(0, 3, 1, 2)
         camera_outputs = pipeline.model.get_outputs_for_camera_ray_bundle(current_ray_bundle)
         rendered_image = camera_outputs["rgb"].unsqueeze(dim=0).permute(0, 3, 1, 2)
-        print(i,rendered_image.shape)
+        
 
         # Save the original image
         original_image_tensor = transforms.ToPILImage()(original_image.squeeze(0).cpu())
@@ -72,20 +69,17 @@ def main():
         #original_image_tensor.save(original_image_path)
 
         # Sve the rendered image
-        image_tensor = transforms.ToPILImage()(rendered_image.squeeze(0).cpu())  # Remove the batch dimension
+        image_tensor = transforms.ToPILImage()(rendered_image.squeeze(0).cpu())  
         image_tensor = image_tensor.convert("RGB")
 
         # Save the image
-        image_path = str(i)+"_output_image.png"  # You can choose any desired file path and format
+        image_path = str(i)+"_output_image.png"  
         current_index = int(current_index)
         current_index+=1
         formatted_index = f"{current_index:02d}"
         ori_file_path='/home/kirakiraakira/cs236/instruct-nerf2nerf/data/nerfstudio/bear/updated_images/frame_000'+formatted_index +'.jpg'
         image_tensor.save(ori_file_path)
-    # current_index = torch.tensor(58)
-    # print(current_index.shape)
-    # camera_transforms = pipeline.model.camera_optimizer(current_index.unsqueeze(dim=0))
-    # print(camera_transforms)
+
 
 
 if __name__ == '__main__':
