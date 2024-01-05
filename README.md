@@ -1,11 +1,23 @@
+
+# Continuous Editing
+Use `update_imgs.py` to load an edited scene and update input images. Then, use a new prompt to start a new round of editing.
+
+
+
+
+
+
+
+
+
+
+
 # Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions
 
 This is the official implementation of [Instruct-NeRF2NeRF](https://instruct-nerf2nerf.github.io/).
 
 ![teaser](imgs/in2n_teaser.png)
 
-# Continuous Editing
-Use `update_imgs.py` to load an edited scene and update input images. Then, use a new prompt to start a new round of editing.
 
 # Installation
 
