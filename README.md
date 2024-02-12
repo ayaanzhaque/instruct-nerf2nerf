@@ -85,6 +85,8 @@ If your edit isn't working as you desire, it is likely because InstructPix2Pix s
 
 # Extending Instruct-NeRF2NeRF
 
+We built an extension of Instruct-NeRF2NeRF for Gaussian Splatting called [Instruct-GS2GS](https://instruct-gs2gs.github.io/). Their [repository](https://github.com/cvachha/instruct-gs2gs) can be used as an example of how to build future projects based on Instruct-NeRF2NeRF.
+
 ### Issues
 Please open Github issues for any installation/usage problems you run into. We've tried to support as broad a range of GPUs as possible, but it might be necessary to provide even more low-footprint versions. Please contribute with any changes to improve memory usage!
 
